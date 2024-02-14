@@ -1,13 +1,23 @@
 "use client";
 
-import { computed } from "@preact/signals-react";
+import { signal, computed } from "@preact/signals-react";
 import { useSignals, useSignal } from "@preact/signals-react/runtime";
 
+export const todos = signal([
+  { text: "Pergi Ke pasar", completed: true },
+  { text: "Memasak", completed: false },
+  { text: "Memancing", completed: false },
+]);
 const TodoList = () => {
   console.log("todolist");
   useSignals();
   const name = useSignal("Steve");
 
+  const todos = useSignal([
+    { text: "Pergi Ke pasar", completed: true },
+    { text: "Memasak", completed: false },
+    { text: "Memancing", completed: false },
+  ]);
   // console.log(name.value);
 
   const onInput = (event) => {
@@ -15,11 +25,6 @@ const TodoList = () => {
     // console.log(event.currentTarget.value);
   };
 
-  const todos = useSignal([
-    { text: "Pergi Ke pasar", completed: true },
-    { text: "Memasak", completed: false },
-    { text: "Memancing", completed: false },
-  ]);
   const newItem = useSignal("");
 
   const addTodo = () => {
@@ -41,15 +46,10 @@ const TodoList = () => {
     // console.log(todos.value);
   };
 
-  const completed = computed(() => {
-    // When `todos` changes, this re-runs automatically:
-    return todos.value.filter((todo) => todo.completed).length;
-  });
-
   return (
     <div>
       <h1>{name.value}'s ToDo List</h1>
-      <h1>{completed.value}</h1>
+      {/* <h1>{completed.value}</h1> */}
       <input
         value={newItem.value}
         onInput={onInput}
